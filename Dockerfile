@@ -3,13 +3,14 @@ RUN apt-get update && \
     apt-get install -y git wget python python-pip cmake-curses-gui mayavi2
 
 RUN wget -O- http://neuro.debian.net/lists/xenial.us-ca.full | tee /etc/apt/sources.list.d/neurodebian.sources.list \
-    && apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9
+    && apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xA5D32F012649A5A9
 
 RUN apt-get update && \
     apt-get install -y fsl ants dcm2niix mrtrix3
 
+RUN pip install pathlib
 RUN pip install cython setuptools==44.1.1 decorator==4.3.0 ordered-set==3.1.1 pyyaml
-RUN pip install numpy==1.16.6 scipy==1.2.2 hjson pyparsing future networkx==2.2 scikits.bootstrap
+RUN pip install numpy==1.16.6 scipy==1.2.2 hjson pyparsing==2.4.7 future networkx==2.2 scikits.bootstrap
 RUN pip install kiwisolver==1.1.0 matplotlib==2.2.5 pandas==0.24.2 nibabel==2.5.2 dipy==0.12.0 SQLAlchemy==1.3.0 Pillow==6.2.2 nipype==0.11.0 seaborn==0.7.0
 
 WORKDIR /apps
@@ -17,8 +18,8 @@ WORKDIR /apps
 RUN wget https://www.slicer.org/slicer3-downloads/Release/linux-x86_64/Slicer3-3.6.3-2011-03-04-linux-x86_64.tar.gz &&  \
     tar -xzvf Slicer3-3.6.3-2011-03-04-linux-x86_64.tar.gz && rm Slicer3-3.6.3-2011-03-04-linux-x86_64.tar.gz
 
-RUN wget http://slicer.kitware.com/midas3/download/item/119825/Slicer-4.3.1-linux-amd64.tar.gz &&  \
-    tar -xzvf Slicer-4.3.1-linux-amd64.tar.gz && rm Slicer-4.3.1-linux-amd64.tar.gz
+#RUN wget http://slicer.kitware.com/midas3/download/item/119825/Slicer-4.3.1-linux-amd64.tar.gz &&  \
+#    tar -xzvf Slicer-4.3.1-linux-amd64.tar.gz && rm Slicer-4.3.1-linux-amd64.tar.gz
     
 RUN git clone https://github.com/sinkpoint/pynrrd.git \
     && cd pynrrd && python setup.py install
